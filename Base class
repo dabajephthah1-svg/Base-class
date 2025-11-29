@@ -1,0 +1,52 @@
+open class Employee(
+    protected val name: String,
+    protected val baseSalary: Double
+) {
+    open fun calculateSalary(): Double {
+        return baseSalary
+    }
+}
+
+class FullTimeEmployee(
+    name: String,
+    baseSalary: Double,
+    private val bonus: Double
+) : Employee(name, baseSalary) {
+
+    override fun calculateSalary(): Double {
+        return baseSalary + bonus
+    }
+}
+
+class PartTimeEmployee(
+    name: String,
+    private val hourlyRate: Double,
+    private val hoursWorked: Int
+) : Employee(name, baseSalary = 0.0) {
+
+    override fun calculateSalary(): Double {
+        return hourlyRate * hoursWorked
+    }
+}
+
+fun main() {
+
+    // Create employees
+    val emp1 = FullTimeEmployee("Alice", 2000.0, 500.0)
+    val emp2 = FullTimeEmployee("Bob", 1800.0, 300.0)
+    val emp3 = PartTimeEmployee("Charlie", 15.0, 80)
+    val emp4 = PartTimeEmployee("Diana", 20.0, 60)
+
+    // Store in a map
+    val employees = mapOf(
+        "Alice" to emp1.calculateSalary(),
+        "Bob" to emp2.calculateSalary(),
+        "Charlie" to emp3.calculateSalary(),
+        "Diana" to emp4.calculateSalary()
+    )
+
+    // Display salaries
+    for ((name, salary) in employees) {
+        println("$name earns: €$salary")
+    }
+}
